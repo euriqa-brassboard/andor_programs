@@ -1,0 +1,32 @@
+//
+
+cls()
+
+// Input Parameters
+prefix$ = "Q:\BrassboardSystem\Imaging\YbOven_20210729_center_2\3s_0A_261uW_"
+hstart = 1
+hend = 2048
+vstart = 1
+vend = 2048
+bin = 8
+exposuretime = 3
+nimages = 5
+idxoffset = 0
+
+// Real program
+SetImage(hstart, hend, bin, vstart, vend, bin)
+SetExposureTime(exposuretime)
+SetTriggerMode(0)
+
+counter = 0
+
+ShowTimings()
+while(counter < nimages)
+    counterstr$ = str$(counter + idxoffset)
+    counter = counter + 1
+    print("Acquiring image ";str$(counter);"/";str$(nimages);"@";date$();" ";time$())
+    run()
+    #101 = #0
+    save(#101, prefix$;counterstr$;".sif")
+    CloseWindow(#101)
+wend
